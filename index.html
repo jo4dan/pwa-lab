@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Live Editor — Exam Ready</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#1e2127;
+  --panel:#282c34;
+  --text:#abb2bf;
+  --accent:#56b6c2;
+  --border:#3e4451;
+  --btn:#98c379;
+  --btn-hover:#7db05c;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ---------- HEADER ---------- */
+header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+}
+
+header h1{
+  margin:0;
+  font-size:1.2rem;
+  color:var(--accent);
+  flex:1;
+}
+
+#burger{
+  font-size:1.6rem;
+  background:none;
+  border:none;
+  color:var(--text);
+  cursor:pointer;
+  display:none;
+}
+
+/* ---------- LAYOUT ---------- */
+.container{padding:10px}
+
+.layout{
+  display:flex;
+  gap:12px;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:320px;
+  background:var(--panel);
+  padding:15px;
+  border-radius:8px;
+  overflow-y:auto;
+}
+
+.sidebar h3{
+  color:var(--accent);
+  margin-top:12px;
+}
+
+.question{
+  background:var(--border);
+  padding:10px;
+  border-radius:6px;
+  margin-bottom:8px;
+  cursor:pointer;
+  font-size:0.9rem;
+}
+
+.question:hover,
+.question.active{
+  background:var(--accent);
+  color:#000;
+  font-weight:600;
+}
+
+/* ---------- MAIN ---------- */
+.main{
+  flex:1;
+  display:flex;
+  gap:12px;
+}
+
+/* ---------- EDITOR ---------- */
+.editor,.output{
+  flex:1;
+  background:var(--panel);
+  padding:10px;
+  border-radius:8px;
+}
+
+textarea{
+  width:100%;
+  height:320px;
+  background:#21252b;
+  color:var(--text);
+  border:none;
+  outline:none;
+  padding:12px;
+  font-family:"Fira Code", monospace;
+  resize:none;
+  border-radius:4px;
+  line-height:1.5;
+}
+
+/* editor buttons */
+.editor-actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+button.action{
+  flex:1;
+  padding:10px;
+  border:none;
+  font-size:0.95rem;
+  font-weight:600;
+  cursor:pointer;
+  border-radius:4px;
+}
+
+#run{
+  background:var(--btn);
+}
+#run:hover{background:var(--btn-hover)}
+
+#copy{
+  background:#61afef;
+  color:#000;
+}
+#copy:hover{
+  background:#4fa3e3;
+}
+
+/* ---------- OUTPUT ---------- */
+.output h3{
+  margin:0 0 8px;
+  color:var(--accent);
+}
+
+iframe{
+  width:100%;
+  height:320px;
+  border:none;
+  background:white;
+}
+
+/* ---------- MOBILE ---------- */
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:998;
+}
+
+@media(max-width:900px){
+  #burger{display:block}
+
+  .layout{flex-direction:column}
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:-100%;
+    height:100%;
+    width:300px;
+    border-radius:0;
+    z-index:999;
+    transition:left 0.3s ease;
+  }
+
+  .sidebar.open{left:0}
+
+  .main{flex-direction:column}
+
+  #overlay.show{display:block}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <button id="burger">☰</button>
+  <h1>HTML Live Editor — Exam & Viva Safe</h1>
+</header>
+
+<div id="overlay"></div>
+
+<div class="container">
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+
+      <h3>PART – A</h3>
+
+      <div class="question" data-id="A1">
+        1. Create a simple HTML page that includes a heading, a paragraph, bold and italic text,
+        and both an ordered list and an unordered list.
+      </div>
+
+      <div class="question" data-id="A2">
+        2. Create an HTML table that displays student information including Name, Roll Number,
+        and Department.
+      </div>
+
+      <div class="question" data-id="A3">
+        3. Create an HTML page that includes a hyperlink to an external website,
+        an embedded video, and an audio file.
+      </div>
+
+      <div class="question" data-id="A4">
+        4. Design an HTML form to collect user input, including fields such as
+        Name, Email, Gender, and a Submit button.
+      </div>
+
+      <div class="question" data-id="A5">
+        5. Use CSS to style a paragraph with a blue background color,
+        white text color, and 10 pixels of padding.
+      </div>
+
+      <div class="question" data-id="A6">
+        6. Create an HTML page demonstrating the use of CSS Box Model by applying
+        margin, padding, border, and background color to a div element.
+      </div>
+
+      <h3>PART – B</h3>
+
+      <div class="question" data-id="B1">
+        1. Create an HTML form styled with CSS that includes text input fields and a submit button.
+        The submit button should change its background color when hovered over.
+        Additionally, implement basic form validation using HTML attributes.
+      </div>
+
+      <div class="question" data-id="B2">
+        2. Design a simple calculator (Add, Subtract, Multiply, Divide)
+        using HTML, CSS, and JavaScript.
+      </div>
+
+      <div class="question" data-id="B3">
+        3. Create a webpage that displays the current date and time using JavaScript,
+        and updates it every second.
+      </div>
+
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <div class="editor">
+        <textarea id="code"></textarea>
+
+        <div class="editor-actions">
+          <button class="action" id="run">Run Code</button>
+          <button class="action" id="copy">Copy Code</button>
+        </div>
+      </div>
+
+      <div class="output">
+        <h3>Live Output</h3>
+        <iframe id="preview"></iframe>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+const code = document.getElementById("code");
+const frame = document.getElementById("preview");
+const sidebar = document.getElementById("sidebar");
+const burger = document.getElementById("burger");
+const overlay = document.getElementById("overlay");
+
+/* autosave */
+code.value = localStorage.getItem("autosave") || "";
+code.oninput = () => localStorage.setItem("autosave", code.value);
+
+/* run */
+document.getElementById("run").onclick = () => {
+  frame.srcdoc = code.value;
+};
+
+/* copy */
+document.getElementById("copy").onclick = async () => {
+  await navigator.clipboard.writeText(code.value);
+  alert("Code copied 📋");
+};
+
+/* burger */
+burger.onclick = () => {
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+};
+
+/* overlay close */
+overlay.onclick = () => {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+};
+
+/* snippets */
+const snippets={
+A1:`<!DOCTYPE html>
+<html>
+<body>
+<h1>Welcome</h1>
+<p>This is <b>bold</b> and <i>italic</i>.</p>
+<ol><li>HTML</li><li>CSS</li><li>JavaScript</li></ol>
+<ul><li>Pen</li><li>Book</li><li>Notebook</li></ul>
+</body>
+</html>`,
+
+A2:`<!DOCTYPE html>
+<html>
+<body>
+<table border="1">
+<tr><th>Name</th><th>Roll</th><th>Dept</th></tr>
+<tr><td>Rahul</td><td>101</td><td>CSE</td></tr>
+<tr><td>Anita</td><td>102</td><td>ECE</td></tr>
+</table>
+</body>
+</html>`,
+
+A3:`<!DOCTYPE html>
+<html>
+<body>
+<a href="https://google.com" target="_blank">Visit Google</a><br><br>
+<video width="200" controls><source src="video.mp4"></video><br><br>
+<audio controls><source src="audio.mp3"></audio>
+</body>
+</html>`,
+
+A4:`<!DOCTYPE html>
+<html>
+<body>
+<form>
+Name: <input type="text"><br><br>
+Email: <input type="email"><br><br>
+<input type="radio" name="g"> Male
+<input type="radio" name="g"> Female<br><br>
+<input type="submit">
+</form>
+</body>
+</html>`,
+
+A5:`<!DOCTYPE html>
+<html>
+<head>
+<style>
+p{background:blue;color:white;padding:10px;}
+</style>
+</head>
+<body>
+<p>Styled paragraph</p>
+</body>
+</html>`,
+
+A6:`<!DOCTYPE html>
+<html>
+<head>
+<style>
+div{margin:20px;padding:15px;border:2px solid black;background:lightgray;}
+</style>
+</head>
+<body>
+<div>Box Model Demo</div>
+</body>
+</html>`,
+
+B1:`<!DOCTYPE html>
+<html>
+<head>
+<style>
+button{background:blue;color:white;padding:8px;}
+button:hover{background:green;}
+</style>
+</head>
+<body>
+<form>
+<input type="text" required placeholder="Name">
+<input type="email" required placeholder="Email">
+<button>Submit</button>
+</form>
+</body>
+</html>`,
+
+B2:`<!DOCTYPE html>
+<html>
+<body>
+<input id="n1" type="number">
+<input id="n2" type="number"><br>
+<button onclick="add()">+</button>
+<button onclick="sub()">-</button>
+<button onclick="mul()">×</button>
+<button onclick="div()">÷</button>
+<p id="r"></p>
+<script>
+function add(){r.innerText=+n1.value+ +n2.value}
+function sub(){r.innerText=n1.value-n2.value}
+function mul(){r.innerText=n1.value*n2.value}
+function div(){r.innerText=n1.value/n2.value}
+<\/script>
+</body>
+</html>`,
+
+B3:`<!DOCTYPE html>
+<html>
+<body>
+<h2 id="clock"></h2>
+<script>
+setInterval(()=>clock.innerText=new Date(),1000)
+<\/script>
+</body>
+</html>`
+};
+
+/* load */
+document.querySelectorAll(".question").forEach(q=>{
+  q.onclick=()=>{
+    document.querySelectorAll(".question").forEach(x=>x.classList.remove("active"));
+    q.classList.add("active");
+    code.value=snippets[q.dataset.id];
+    localStorage.setItem("autosave",code.value);
+    frame.srcdoc=code.value;
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+  };
+});
+
+document.querySelector(".question").click();
+</script>
+
+</body>
+</html>
